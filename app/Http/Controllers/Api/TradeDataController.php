@@ -22,4 +22,9 @@ class TradeDataController extends Controller
 
         return $tradedata;
     }
+
+    public function show()
+    {
+                       
+    }
 }
