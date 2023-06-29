@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('tradedata', [TradeDataController::class, 'index']);
+Route::get('tradedata/{time}', [TradeDataController::class, 'show']);
