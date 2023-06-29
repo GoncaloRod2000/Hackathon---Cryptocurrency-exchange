@@ -2,12 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 
-export default function TradeData() {
+export default function TradeData({time, setTime}) {
 
     const [tradeData, setTradeData] = useState([])
 
     // finding out the last given time in the data:
-    const [timeNow, setTimeNow] = useState(0)
+    // const [time, setTime] = useState(0)
 
     const loadTradeData = async () => {
         // Request with Axios:
@@ -22,7 +22,7 @@ export default function TradeData() {
                     maxTime = element.time;
                 }
             });
-            setTimeNow(maxTime)
+            setTime(maxTime)
             console.log(maxTime);
 
         } catch (error) {
@@ -31,13 +31,16 @@ export default function TradeData() {
     }
 
     // Using this for button, should be replaced with timer later:
-    const [nextSingleTrade, setNextSingleTrade] = useState('')
+
 
     const loadSingularTrade = async () => {
         try {
-            const response = await axios.get('/api/tradedata/' + timeNow)
-            setNextSingleTrade(response.data)
-            console.log(nextSingleTrade);
+            const response = await axios.get('/api/tradedata/' + time)
+            const newTradeData = [...tradeData]
+            newTradeData.shift()
+            newTradeData.push(response.data)
+            setTradeData(newTradeData)
+
         } catch (error) {
             console.log(error);
         }
@@ -47,6 +50,10 @@ export default function TradeData() {
     useEffect(() => {
         loadTradeData()
     }, [])
+
+    useEffect(() => {
+        time && loadSingularTrade()
+    }, [time])
 
 
     // Max & Min calculations for div heights:
@@ -69,7 +76,7 @@ export default function TradeData() {
     // Return:
     return (
         <>
-            <p>Now: {DateTime.fromSeconds(timeNow).toFormat('yyyy LL dd, HH:mm')}</p>
+            {/* <p>Now: {time && DateTime.fromSeconds(time).toFormat('yyyy LL dd, HH:mm')}</p> */}
             <div className="trades">
                 {
                     !tradeData
@@ -77,10 +84,10 @@ export default function TradeData() {
                         :
                         tradeData.map((trade) => {
                             return (
-                                <div key={trade.id} className={`trade_div ` + trade.id} style={{ height: (((trade.high - min) / (max - min)) * 80) + 20 + 'px' }}>
+                                <div key={trade.time} className={`trade_div ` + trade.time} style={{ height: (((trade.high - min) / (max - min)) * 80) + 20 + 'px' }}>
                                     <div className={`trade_info ` + trade.id} >
                                         <p>
-                                        Time: {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')} |
+                                        Time: {time && DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')} |
                                         Open: {trade.open} |
                                         Close {trade.close}
                                         </p>
@@ -90,7 +97,7 @@ export default function TradeData() {
                         })
                 }
             </div>
-            <button onClick={() => setTimeNow(timeNow + 60) & loadSingularTrade()}>Next Minute</button>
+            {/* <button onClick={loadSingularTrade}>Next Minute</button> */}
         </>
     )
 }
