@@ -26,7 +26,8 @@ class TradeDataController extends Controller
     public function show($time)
     {
         $trade = TradingBtcUsd::
-        where('time', '>=', $time)
+        where('time', '<=', $time)
+        ->orderBy('time', 'DESC')
         ->first(); 
         
         return $trade;
