@@ -6,13 +6,14 @@ export default function TradeData() {
 
     const [tradeData, setTradeData] = useState([])
 
+    // finding out the last given time in the data:
     const [timeNow, setTimeNow] = useState(0)
 
     const loadTradeData = async () => {
         // Request with Axios:
         try {
             const response = await axios.get('/api/tradedata')
-            console.log(response.data);
+            // console.log(response.data);
             setTradeData(response.data)
 
             let maxTime = 0;
@@ -29,23 +30,26 @@ export default function TradeData() {
         }
     }
 
-
+    // Using this for button, should be replaced with timer later:
+    const [nextSingleTrade, setNextSingleTrade] = useState('')
 
     const loadSingularTrade = async () => {
         try {
-            const response = await axios.get('/api/tradedata/')
+            const response = await axios.get('/api/tradedata/' + timeNow)
+            setNextSingleTrade(response.data)
+            console.log(nextSingleTrade);
         } catch (error) {
             console.log(error);
         }
     }
 
+    //useEfect for loading all 100 trades on page load:
     useEffect(() => {
         loadTradeData()
     }, [])
 
-    // {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}
 
-
+    // Max & Min calculations for div heights:
     let max = 0;
     let min = 100000000;
 
@@ -59,14 +63,10 @@ export default function TradeData() {
     });
     if (tradeData !== []) {
         let percentage = (min / max) * 100
-        console.log(percentage);
+        // console.log(percentage);
     }
 
-
-
-
-
-
+    // Return:
     return (
         <>
             <p>Now: {DateTime.fromSeconds(timeNow).toFormat('yyyy LL dd, HH:mm')}</p>
@@ -90,7 +90,7 @@ export default function TradeData() {
                         })
                 }
             </div>
-            <button onClick={() => setTimeNow(timeNow + 60)}>Next Minute</button>
+            <button onClick={() => setTimeNow(timeNow + 60) & loadSingularTrade()}>Next Minute</button>
         </>
     )
 }
