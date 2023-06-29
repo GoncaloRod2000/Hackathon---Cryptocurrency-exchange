@@ -23,6 +23,8 @@ export default function TradeData() {
 
     // {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}
 
+    
+
     return (
         <div className="trades">
             {
@@ -32,12 +34,18 @@ export default function TradeData() {
                     tradeData.map((trade) => {
                         return (
                             <>
-                            <div key={trade.id} className={`trade_div ` + trade.id}></div>
+                                <div key={trade.id} className={`trade_div ` + trade.id}>
+                                    <p className={`trade_info ` + trade.id} >
+                                        Time: {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}
+                                        Open: {trade.open}
+                                        Close {trade.close}
+                                    </p>
+                                </div>
                             </>
                         )
 
                     })
-}
+            }
 
         </div>
     )
