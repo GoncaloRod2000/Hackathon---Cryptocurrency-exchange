@@ -1,6 +1,7 @@
 @extends('mainlayout')
 
 @section('head')
+    
     @vite('resources/css/Trade/Trade.scss')
     @viteReactRefresh
     @vite('resources/js/Trade/main.jsx')
