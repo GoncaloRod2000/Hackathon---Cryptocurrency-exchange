@@ -1,27 +1,19 @@
-.trades{
-display: flex;
+.trades {
+    display: flex;
 
-
-
-    .trade_div{
-        
+    .trade_div {
         margin-right: 1px;
         justify-content: space-between;
         background-color: red;
         height: 100px;
         width: 10px;
 
-      
-
-        .trade_info{
+        .trade_info {
             visibility: hidden;
         }
 
-        .trade_info:hover{
-                visibility: visible;
+        .trade_info:hover {
+            visibility: visible;
         }
-    } 
-
-
+    }
 }
-

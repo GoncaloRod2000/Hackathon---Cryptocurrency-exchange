@@ -35,11 +35,11 @@ export default function TradeData() {
                         return (
                             <>
                                 <div key={trade.id} className={`trade_div ` + trade.id}>
-                                    <p className={`trade_info ` + trade.id} >
+                                    <div className={`trade_info ` + trade.id} >
                                         Time: {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}
                                         Open: {trade.open}
                                         Close {trade.close}
-                                    </p>
+                                    </div>
                                 </div>
                             </>
                         )
