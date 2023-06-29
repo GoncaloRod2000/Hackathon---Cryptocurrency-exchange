@@ -23,8 +23,12 @@ class TradeDataController extends Controller
         return $tradedata;
     }
 
-    public function show()
+    public function show($time)
     {
-                       
+        $trade = TradingBtcUsd::
+        where('time', '>=', $time)
+        ->first(); 
+        
+        return $trade;
     }
 }
