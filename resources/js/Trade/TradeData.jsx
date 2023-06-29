@@ -21,23 +21,24 @@ export default function TradeData() {
         loadTradeData()
     }, [])
 
-    // DateTime.fromSeconds(1364774820).toFormat('yyyy LL dd, HH:mm')
-
+    // {DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}
 
     return (
-        <>
+        <div className="trades">
             {
                 !tradeData
                     ? <div>Loading...</div>
                     :
                     tradeData.map((trade) => {
                         return (
-                            <div key={trade.id} className={`trade_div ` + trade.id}>{DateTime.fromSeconds(trade.time).toFormat('yyyy LL dd, HH:mm')}</div>
+                            <>
+                            <div key={trade.id} className={`trade_div ` + trade.id}></div>
+                            </>
                         )
 
                     })
 }
 
-        </>
+        </div>
     )
 }

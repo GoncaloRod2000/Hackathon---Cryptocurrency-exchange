@@ -10,9 +10,14 @@ class TradeDataController extends Controller
 {
     public function index()
     {
+        $index = Rand(min: 1, max: 4400954);
+
+        // dd($index);
+
         $tradedata = TradingBtcUsd::
-        where('time' > '')
-        ->limit(50)
+        where('id', '>', $index)
+        ->orderBy('id')
+        ->limit(100)
         ->get();
 
         return $tradedata;
